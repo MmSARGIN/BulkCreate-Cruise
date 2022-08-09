@@ -1,0 +1,26 @@
+<template>
+    <div class='slds-box'>
+       
+        <form onchange={handleChange}>
+           Select Cruise : <select name="cruise">
+                <template for:each={cruise} for:item="cru" >
+                    
+                    <option label={cru.Name} value={cru.Name} key={cru.Id} ></option>
+                    </template>
+                    </select>
+    <lightning-input name="many" label="How Many Room Will Be Create?" type="number"></lightning-input>
+    <lightning-input name="capacity" label="Room Capacity" type="number"></lightning-input>
+     <lightning-input name="price" label="Room Price" type="number"></lightning-input>
+     
+    Select Room Type : <select name="type">
+        <template for:each={roomData} for:item="room" >
+            
+             <option label={room.Name} value={room.Name} key={room.Id} ></option>
+            </template>
+            </select>
+            <br>
+    <lightning-button class="slds-button" label="Create" onclick={handleClick}></lightning-button>
+</form>    
+</div>
+
+</template>
