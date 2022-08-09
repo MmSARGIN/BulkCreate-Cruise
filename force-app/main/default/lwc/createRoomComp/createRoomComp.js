@@ -5,11 +5,10 @@ import getRoomType from '@salesforce/apex/CreateRoomController.getRoomType';
 
 
 export default class CreateRoomComp extends LightningElement {
-    
-    
     cruise;
     roomData;
     room;
+    //APEXE LAZIM OLAN PARAMETRELERİ BİR OBJEDE TOPLADIM
     props = {
         many: null,
         capacity : null,
@@ -19,6 +18,8 @@ export default class CreateRoomComp extends LightningElement {
         roomid :'',
         type: ''
     }
+
+    //BURADA CRUİSELARIN İNFOSUNU ÇEKİYORUM PİCKLİSTE EKLEYECEĞİM 
     @wire(createRoom)
     takeData({ error, data }) {
       
@@ -29,7 +30,7 @@ export default class CreateRoomComp extends LightningElement {
         console.error('Error:', error);
       }
     }
-
+    //BURADA ROOM TYPELARI ÇEKİYORUM PİCKLİSTE EKLEYECEĞİM 
     @wire(getRoomType)
     wiredData({ error, data }) {
       
@@ -43,7 +44,8 @@ export default class CreateRoomComp extends LightningElement {
      
     }
   
-      handleChange = (event) => {
+      //BURDA İNPUTA YAZILANLARI DEĞİŞKENLERİME ASSİGN EDİYORUM
+    handleChange = (event) => {
        
         if(event.target.name === 'many'){
             this.props.many = event.target.value;
@@ -57,12 +59,16 @@ export default class CreateRoomComp extends LightningElement {
           this.props.cruiseName = event.target.value;
         }
        }
+
+       //CLİCK BASILDIĞINDA, TEK TEK İNPUT BİLGİLERİNİ ALIP, APEXE PARAMETRE OLARAK GÖNDERİP, ROOM CREATELENİYOR.
     handleClick = () => {
       console.log(this.cruise);
         this.roomData.map((item) => {
+          //BU VE BİR ALTINDAKİ MAP(1) : SEÇİLEN ROOM TYPE VE CRUİSENİN IDSİNİ ALIP PARAMETRE OLARAK GÖNDEREBİLMEMİ SAĞLIYO
           item.Name === this.props.type ? this.props.roomid = item.Id : 'Olmadı kanks';
         });
         this.cruise.map((i)=> {
+          // (1)
           i.Name === this.props.cruiseName ? this.props.cruiseId = i.Id : 'Olmadı knkalar';
         })
         if(this.cruiseId !== ''){
